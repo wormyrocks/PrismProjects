@@ -2,7 +2,7 @@
 #include <Bounce.h>
 
 #define BUTTON 14
-#define LED 19
+#define LED 13
 #define POT 20
 #define CLK 22
 #define DAT 21
@@ -19,15 +19,21 @@ void setup() {
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(POT, INPUT);
   Serial.begin(115200);
+  for (int i = 0; i < 10; ++i) {
+    digitalWrite(LED, HIGH);
+    delay(50);
+    digitalWrite(LED, LOW);
+    delay(50);
+  }
 }
 
 void loop() {
-  if (myButton.update()) {
-    if (myButton.fallingEdge()) {
-      Serial.println("button pressed");
+    if (myButton.update()) {
+      if (myButton.fallingEdge()) {
+        Serial.println("button pressed");
+      }
     }
-  }
-  Serial.println(enc.read());
-  Serial.println(analogRead(POT));
-  delay(50);
+    Serial.println(enc.read());
+    Serial.println(analogRead(POT));
+    delay(100);
 }
